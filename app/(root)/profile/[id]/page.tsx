@@ -50,7 +50,7 @@ async function Page({ params }: { params: Promise<{ id: string }> }) {
           </TabsList>
           {profileTabs.map((tab) => (
             <TabsContent
-              key={`content-$ {tab.value}`}
+              key={`content-${tab.label}`}
               value={tab.value}
               className="w-full text-light-1"
             >
