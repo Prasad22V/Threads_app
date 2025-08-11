@@ -12,7 +12,7 @@ export const ourFileRouter = {
   media: f({
     image: {
       maxFileSize: "4MB",
-      maxFileCount: 1,
+      maxFileCount: 4,
     },
   })
     // Set permissions and file types for this FileRoute
