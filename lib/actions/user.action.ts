@@ -8,6 +8,22 @@ import Community from "../models/community.model";
 import { SortOrder } from "mongoose";
 import { FilterQuery } from "mongoose";
 
+
+
+export async function fetchUser(userId: string) {
+  try {
+    connectToDB();
+
+    return await User.findOne({ id: userId })
+    .populate({
+      path: "communities",
+      model: Community,
+    });
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user: ${error.message}`);
+  }
+}
+
 interface Params {
   userId: string;
   username: string;
@@ -45,20 +61,6 @@ export async function updateUser({
     }
   } catch (error: any) {
     throw new Error(`Failed to create/update user: ${error.message}`);
-  }
-}
-
-export async function fetchUser(userId: string) {
-  try {
-    connectToDB();
-
-    return await User.findOne({ id: userId })
-    // .populate({
-    //   path: "communities",
-    //   model: Community,
-    // });
-  } catch (error: any) {
-    throw new Error(`Failed to fetch user: ${error.message}`);
   }
 }
 
