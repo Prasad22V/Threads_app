@@ -10,8 +10,9 @@ import Pagination from "@/app/components/shared/Pagination";
 async function Page({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | undefined };
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
+  const params = await searchParams;
   const user = await currentUser();
   if (!user) return null;
 
@@ -19,8 +20,8 @@ async function Page({
   if (!userInfo?.onboarded) redirect("/onboarding");
 
   const result = await fetchCommunities({
-    searchString: searchParams.q,
-    pageNumber: searchParams?.page ? +searchParams.page : 1,
+    searchString: params.q,
+    pageNumber: params?.page ? +params.page : 1,
     pageSize: 25,
   });
 
@@ -54,12 +55,10 @@ async function Page({
 
       <Pagination
         path="communities"
-        pageNumber={searchParams?.page ? +searchParams.page : 1}
+        pageNumber={params?.page ? +params.page : 1}
         isNext={result.isNext}
       />
     </>
-
-    
   );
 }
 
